@@ -1,7 +1,9 @@
-#!/usr/bin/env php
+
 <?php
 function ft_split($str)
 {
+    if ($str === " ")
+        return null;
 	$word = explode(" ", $str);
 	$sort_word = array_values(array_filter($word));
 	sort($sort_word);

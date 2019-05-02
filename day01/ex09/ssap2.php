@@ -1,33 +1,53 @@
-#!/usr/bin/env php
+#!/usr/bin/php
 <?php
+
+if ($argc < 2)
+    exit();
+
+function ft_push(&$res, $arr)
+{
+    for ($i = 0; $i < count($arr); $i++) {
+        array_push($res, $arr[$i]);
+    }
+}
+
 function ft_split($str)
 {
-	$word = explode(" ", $str);
-	$sort_word = array_values(array_filter($word));
-	return ($sort_word);
+    $str = trim($str);
+    $str = preg_replace('/\s+/', ' ', $str);
+    $arr = explode(" ", $str);
+    return ($arr);
 }
 
-function custom_sort($i, $j)
-{
-	if (ctype_alpha($i[0]) && ctyle_alpha($j[1]))
-		return (strcasecmp($i, $j));
-	if (ctype_digit($i[0]) && ctype_digit($b[0]))
-		return ($i > $b ? 1 : ($i == $j ? 0 : -1));
-	return ($ret < 0 ? 1 : ($ret == 0 ? 0 : -1));
+$array = [];
+
+for ($i = 1; $i < $argc; $i++) {
+    $split = ft_split($argv[$i]);
+    ft_push($array, $split);
 }
 
-if ($argc > 1)
-{
-	$my_arr = array();
-	for ($i = 1; $i < count($argv); $i++)
-	{
-		$str= trim(preg_replace("/\s{2,}/"," ",$argv[$i]));
-		$del_space = ft_split($str);
-		for ($j = 0; $j < count($del_space); $j++)
-			$word = array_push($my_arr, $del_space[$j]);
-	}
-	usort($my_arr, "custom_sort");
-	for ($i = 0; $i < count($my_arr); $i++)
-		echo ($my_arr[$i]."\n");
+function cmp($a, $b){
+
+    $i = 0;
+    $line = "abcdefghijklmnopqrstuvwxyz0123456789!\"
+        '#'$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+    while (($i < strlen($a)) || ($i < strlen($b)))
+    {
+        $a_index = stripos($line, $a[$i]);
+        $b_index = stripos($line, $b[$i]);
+        if ($a_index > $b_index)
+            return (1);
+        else if ($a_index < $b_index)
+            return (-1);
+        $i++;
+    }
 }
+
+
+usort($array, "cmp");
+
+foreach ($array as $val){
+    echo "$val\n";
+}
+
 ?>
